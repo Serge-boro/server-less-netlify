@@ -65,12 +65,12 @@ const postLogin = async (req, res, next) => {
     const accessToken = jwt.sign(
       { username: userFound.user, userId },
       'ACCESS_TOKEN_SECRET',
-      { expiresIn: '400s' }
+      { expiresIn: '15s' }
     )
     const refreshToken = jwt.sign(
       { username: userFound.user, userId },
       'REFRESH_TOKEN_SECRET',
-      { expiresIn: '500s' }
+      { expiresIn: '20s' }
     )
 
     userFound.refreshToken = refreshToken
@@ -80,7 +80,7 @@ const postLogin = async (req, res, next) => {
       httpOnly: true,
       sameSite: 'None',
       secure: true,
-      maxAge: 50 * 10 * 1000,
+      maxAge: 20 * 1000,
     })
 
     res.status(200).json({ userID: userId, user, accessToken })
@@ -110,7 +110,7 @@ const refreshTokenController = async (req, res, next) => {
     const accessToken = jwt.sign(
       { username: decoded.username, userId: decoded.userId },
       'ACCESS_TOKEN_SECRET',
-      { expiresIn: '500s' }
+      { expiresIn: '20s' }
     )
     res.json({ accessToken })
   })
