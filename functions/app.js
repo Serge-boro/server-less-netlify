@@ -16,8 +16,11 @@ const app = express()
 // app.use(express.static(path.resolve(__dirname, './public')))
 app.use(express.json())
 
+const origin_prod = 'https://react-node-express-jwt-mongodb.netlify.app'
+const origin_dev = 'http://localhost:5173'
+
 const corsConfig = {
-  origin: 'https://react-node-express-jwt-mongodb.netlify.app',
+  origin: origin_dev,
   credentials: true,
 }
 app.use(cors(corsConfig))
