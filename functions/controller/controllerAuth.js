@@ -15,7 +15,6 @@ const postRegister = async (req, res, next) => {
         .status(400)
         .json({ message: 'Email and password are required.' })
     }
-    
 
     userFound = await UserSchema.findOne({ user })
     if (userFound) {
@@ -65,12 +64,12 @@ const postLogin = async (req, res, next) => {
 
     const accessToken = jwt.sign(
       { username: userFound.user, userId },
-      process.env.ACCESS_TOKEN_SECRET,
+      'ACCESS_TOKEN_SECRET',
       { expiresIn: '500s' }
     )
     const refreshToken = jwt.sign(
       { username: userFound.user, userId },
-      process.env.REFRESH_TOKEN_SECRET,
+      'REFRESH_TOKEN_SECRET',
       { expiresIn: '600s' }
     )
 
