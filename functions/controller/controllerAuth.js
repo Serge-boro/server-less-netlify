@@ -70,7 +70,7 @@ const postLogin = async (req, res, next) => {
     const refreshToken = jwt.sign(
       { username: userFound.user, userId },
       'REFRESH_TOKEN_SECRET',
-      { expiresIn: '60s' }
+      { expiresIn: '120s' }
     )
 
     userFound.refreshToken = refreshToken
@@ -80,7 +80,7 @@ const postLogin = async (req, res, next) => {
       httpOnly: true,
       sameSite: 'None',
       secure: true,
-      maxAge: 60 * 1000,
+      maxAge: 120 * 1000,
     })
 
     res.status(200).json({ userID: userId, user, accessToken })
@@ -102,7 +102,7 @@ const refreshTokenController = async (req, res, next) => {
     return next(res.status(401).json({ message: 'Cookie is not match' }))
   }
 
-  jwt.verify(refreshToken, process.env.REFRESH_TOKEN_SECRET, (err, decoded) => {
+  jwt.verify(refreshToken, 'REFRESH_TOKEN_SECRET', (err, decoded) => {
     if (err || userFound.user !== decoded.username) {
       return res.status(401).json({ message: 'verify jwt failed' })
     }
@@ -110,7 +110,7 @@ const refreshTokenController = async (req, res, next) => {
     const accessToken = jwt.sign(
       { username: decoded.username, userId: decoded.userId },
       'ACCESS_TOKEN_SECRET',
-      { expiresIn: '60s' }
+      { expiresIn: '120s' }
     )
     res.json({ accessToken })
   })
