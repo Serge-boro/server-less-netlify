@@ -15,7 +15,7 @@ const verifyJWT = (req, res, next) => {
       return res.status(403).json({ message: 'Token does not exist' })
     }
 
-    jwt.verify(token, process.env.ACCESS_TOKEN_SECRET, (err, decoded) => {
+    jwt.verify(token, 'ACCESS_TOKEN_SECRET', (err, decoded) => {
       if (err) return res.status(403).json({ message: 'Invalid token' }) //invalid token
       req.user = { username: decoded.username, userId: decoded.userId }
       next()
