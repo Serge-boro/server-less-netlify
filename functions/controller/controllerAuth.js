@@ -80,7 +80,7 @@ const postLogin = async (req, res, next) => {
       httpOnly: true,
       sameSite: 'None',
       secure: true,
-      maxAge: 120 * 1000,
+      maxAge: 180 * 1000,
     })
 
     res.status(200).json({ userID: userId, user, accessToken })
