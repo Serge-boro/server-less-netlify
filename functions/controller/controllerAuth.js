@@ -65,12 +65,12 @@ const postLogin = async (req, res, next) => {
     const accessToken = jwt.sign(
       { username: userFound.user, userId },
       'ACCESS_TOKEN_SECRET',
-      { expiresIn: '60s' }
+      { expiresIn: '120s' }
     )
     const refreshToken = jwt.sign(
       { username: userFound.user, userId },
       'REFRESH_TOKEN_SECRET',
-      { expiresIn: '120s' }
+      { expiresIn: '180s' }
     )
 
     userFound.refreshToken = refreshToken
@@ -110,7 +110,7 @@ const refreshTokenController = async (req, res, next) => {
     const accessToken = jwt.sign(
       { username: decoded.username, userId: decoded.userId },
       'ACCESS_TOKEN_SECRET',
-      { expiresIn: '120s' }
+      { expiresIn: '180s' }
     )
     res.json({ accessToken })
   })
