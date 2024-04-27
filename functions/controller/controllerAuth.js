@@ -99,7 +99,7 @@ const refreshTokenController = async (req, res, next) => {
 
   const matchToken = userFound.refreshToken === refreshToken
   if (!matchToken) {
-    return next(res.status(401).json({ message: 'Cookie is not match' }))
+    return res.status(401).json({ message: 'Cookie is not match' })
   }
 
   jwt.verify(refreshToken, 'REFRESH_TOKEN_SECRET', (err, decoded) => {
