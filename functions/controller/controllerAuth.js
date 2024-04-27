@@ -65,12 +65,12 @@ const postLogin = async (req, res, next) => {
     const accessToken = jwt.sign(
       { username: userFound.user, userId },
       'ACCESS_TOKEN_SECRET',
-      { expiresIn: '120s' }
+      { expiresIn: '60s' }
     )
     const refreshToken = jwt.sign(
       { username: userFound.user, userId },
       'REFRESH_TOKEN_SECRET',
-      { expiresIn: '180s' }
+      { expiresIn: '90s' }
     )
 
     userFound.refreshToken = refreshToken
@@ -80,7 +80,7 @@ const postLogin = async (req, res, next) => {
       httpOnly: true,
       sameSite: 'None',
       secure: true,
-      maxAge: 180 * 1000,
+      maxAge: 90 * 1000,
     })
 
     res.status(200).json({ userID: userId, user, accessToken })
@@ -91,13 +91,16 @@ const postLogin = async (req, res, next) => {
 
 const refreshTokenController = async (req, res, next) => {
   const cookies = req.cookies
+  console.log({ cookies })
 
   if (!cookies?.jwt) {
     return res.status(401).json({ message: 'Cookie is missing' })
   }
   const refreshToken = cookies.jwt
+  console.log({ refreshToken })
 
   const matchToken = userFound.refreshToken === refreshToken
+  console.log({ matchToken })
   if (!matchToken) {
     return res.status(401).json({ message: 'Cookie is not match' })
   }
@@ -110,7 +113,7 @@ const refreshTokenController = async (req, res, next) => {
     const accessToken = jwt.sign(
       { username: decoded.username, userId: decoded.userId },
       'ACCESS_TOKEN_SECRET',
-      { expiresIn: '180s' }
+      { expiresIn: '90s' }
     )
     res.json({ accessToken })
   })
