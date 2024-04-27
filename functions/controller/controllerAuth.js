@@ -97,10 +97,13 @@ const refreshTokenController = async (req, res, next) => {
     return res.status(401).json({ message: 'Cookie is missing' })
   }
   const refreshToken = cookies.jwt
-  console.log({ refreshToken })
-  console.log({ userMatchToken: userFound.refreshToken })
 
-  const matchToken = userFound.refreshToken === refreshToken
+  const userFoundToken = await UserSchema.findOne({ user })
+  console.log({ refreshToken })
+  console.log({ userFoundToken })
+  console.log({ userMatchToken: userFoundToken.refreshToken })
+
+  const matchToken = userFoundToken.refreshToken === refreshToken
   console.log({ matchToken })
   if (!matchToken) {
     return res.status(401).json({ message: 'Cookie is not match' })
