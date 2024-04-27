@@ -22,6 +22,8 @@ const origin_dev = 'http://localhost:5173'
 const corsConfig = {
   origin: origin_dev,
   credentials: true,
+  optionSuccessStatus: 200,
+  methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
 }
 app.use(cors(corsConfig))
 app.options('*', cors(corsConfig))
