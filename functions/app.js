@@ -20,7 +20,7 @@ const origin_prod = 'https://react-node-express-jwt-mongodb.netlify.app'
 const origin_dev = 'http://localhost:5173'
 
 const corsConfig = {
-  origin: origin_dev,
+  origin: origin_prod,
   credentials: true,
   optionSuccessStatus: 200,
   methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
