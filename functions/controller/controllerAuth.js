@@ -98,6 +98,7 @@ const refreshTokenController = async (req, res, next) => {
   }
   const refreshToken = cookies.jwt
   console.log({ refreshToken })
+  console.log({ userMatchToken: userFound.refreshToken })
 
   const matchToken = userFound.refreshToken === refreshToken
   console.log({ matchToken })
